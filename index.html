@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Интерактивті Математика Курсы</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0fdf4; /* Very light green background */
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23a7f3d0' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .lesson-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .lesson-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .progress-bar-inner {
+            transition: width 0.5s ease-in-out;
+        }
+        .gradient-btn {
+            background-image: linear-gradient(to right, #34d399, #10b981, #059669);
+            transition: all 0.3s ease;
+        }
+        .gradient-btn:hover {
+            box-shadow: 0 4px 15px 0 rgba(16, 185, 129, 0.45);
+            transform: scale(1.05);
+        }
+        .lesson-completed {
+            border-left: 5px solid #10b981;
+            background-color: #f0fdf4;
+        }
+        iframe {
+            aspect-ratio: 16 / 9;
+        }
+    </style>
+</head>
+<body class="antialiased text-gray-800">
+
+    <div class="container mx-auto px-4 py-8 md:py-12">
+        <header class="text-center mb-8 md:mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-green-800">Интерактивті Математика Курсы</h1>
+            <p class="mt-2 text-lg text-green-600">Біліміңді шыңдап, жаңа белестерді бағындыр!</p>
+        </header>
+
+        <!-- Progress Section -->
+        <div class="bg-white rounded-xl shadow-md p-6 mb-8 md:mb-12 sticky top-4 z-10 border border-green-200">
+            <h2 class="text-xl font-bold text-gray-700 mb-3">Сіздің прогрессіңіз:</h2>
+            <div class="flex items-center gap-4">
+                <div class="w-full bg-gray-200 rounded-full h-4">
+                    <div id="progress-bar" class="bg-gradient-to-r from-green-400 to-emerald-500 h-4 rounded-full progress-bar-inner" style="width: 0%;"></div>
+                </div>
+                <span id="progress-text" class="font-semibold text-green-700 text-nowrap">0 / 16 аяқталды</span>
+            </div>
+        </div>
+
+        <!-- Lessons Grid -->
+        <main id="lessons-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            <!-- Сабақтар осында JavaScript арқылы енгізіледі -->
+        </main>
+        
+        <footer class="text-center mt-12">
+             <p class="text-gray-500">© 2025 Математика курсы. Барлық құқықтар қорғалған.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        const lessons = [
+            { id: 1, title: '1-сабақ', videoId: 'L14Ef4XNUiE', hwLink: 'https://drive.google.com/file/d/12or8f_KloqF-ADdHHTfsHmqB0rZPjv0d/view?usp=sharing' },
+            { id: 2, title: '2-сабақ', videoId: 'lZ1fIuAUvoU', hwLink: 'https://drive.google.com/file/d/1cUd4lz3SwfnNokcOFID-gHXl1rn_iHTs/view?usp=sharing' },
+            { id: 3, title: '3-сабақ', videoId: 'JyYO_RgOVzM', hwLink: 'https://drive.google.com/file/d/1qDiTrkHkGCGxCfG42IbSekfep8UncS65/view?usp=sharing' },
+            { id: 4, title: '4-сабақ', videoId: '-0DwOFr6KoQ', hwLink: 'https://drive.google.com/file/d/1EI_cNvJPnG3hZw0Lt1nvIq7b1FmyHULF/view?usp=sharing' },
+            { id: 5, title: '5-сабақ', videoId: 'AyG-cp9Vgjk', hwLink: 'https://drive.google.com/file/d/1RQG1yFGxQjDkScnZzs-o-_EKKUp1oxBc/view?usp=sharing' },
+            { id: 6, title: '6-сабақ', videoId: 'r5uE_hfMhSY', hwLink: 'https://drive.google.com/file/d/1DNS6cLa5VYeYJiMK5jVsq-RVZyJPr6AJ/view?usp=sharing' },
+            { id: 7, title: '7-сабақ', videoId: 'hKU_GdtC_8I', hwLink: 'https://drive.google.com/file/d/1HDN5we9QfP0MxA7lpTRsWK3xN1biZU8x/view?usp=sharing' },
+            { id: 8, title: '8-сабақ', videoId: '4gbTyCtB-xQ', hwLink: 'https://drive.google.com/file/d/1W8QeTomo73m3Y-wFFUWNPJ1QKcESCyry/view?usp=sharing' },
+            { id: 9, title: '9-сабақ', videoId: 'vugvvFlvkyg', hwLink: 'https://drive.google.com/file/d/11sH3w3Csrqhka7rRDHiRoDGecPx11JJH/view?usp=sharing' },
+            { id: 10, title: '10-сабақ', videoId: 'I0WwWXfvlUY', hwLink: 'https://drive.google.com/file/d/11sH3w3Csrqhka7rRDHiRoDGecPx11JJH/view?usp=sharing' },
+            { id: 11, title: '11-сабақ', videoId: 'xh22Z_4I5Lg', hwLink: 'https://drive.google.com/file/d/1Wh7P_Fz8lhoDl5nlb5C5WDgmyqa0Qnna/view?usp=sharing' },
+            { id: 12, title: '12-сабақ', videoId: 'UKP7Wt2-U2M', hwLink: 'https://drive.google.com/file/d/1NHJTn-cKDTliElPstJqr4MuoMvQmaPai/view?usp=sharing' },
+            { id: 13, title: '13-сабақ', videoId: 'WrRCQaRktRs', hwLink: 'https://drive.google.com/file/d/1h7xj40OxpkGeLzBeqQxT2f-TNwdZOJE9/view?usp=sharing' },
+            { id: 14, title: '14-сабақ', videoId: 't9vDWy-h_nQ', hwLink: null },
+            { id: 15, title: '15-сабақ', videoId: 'NIvFXIdjDDU', hwLink: null },
+            { id: 16, title: '16-сабақ', videoId: 'eciVBVMv3Vo', hwLink: 'https://drive.google.com/file/d/13lg7xuyXqjUNBZzVFOQtVNbbXtAxEg7A/view?usp=sharing' }
+        ];
+
+        const lessonsContainer = document.getElementById('lessons-container');
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+
+        let completedLessons = new Set(JSON.parse(localStorage.getItem('completedMathLessons')) || []);
+
+        function updateProgress() {
+            const completedCount = completedLessons.size;
+            const totalLessons = lessons.length;
+            const progressPercentage = (completedCount / totalLessons) * 100;
+
+            progressBar.style.width = `${progressPercentage}%`;
+            progressText.textContent = `${completedCount} / ${totalLessons} аяқталды`;
+            
+            // Save to local storage
+            localStorage.setItem('completedMathLessons', JSON.stringify(Array.from(completedLessons)));
+        }
+
+        function renderLessons() {
+            lessonsContainer.innerHTML = '';
+            lessons.forEach(lesson => {
+                const isCompleted = completedLessons.has(lesson.id);
+
+                const card = document.createElement('div');
+                card.id = `lesson-${lesson.id}`;
+                card.className = `lesson-card bg-white rounded-xl shadow-lg overflow-hidden border ${isCompleted ? 'lesson-completed' : 'border-gray-200'}`;
+
+                let hwButtonHTML = '';
+                if (lesson.hwLink) {
+                    hwButtonHTML = `
+                        <a href="${lesson.hwLink}" target="_blank" rel="noopener noreferrer" class="gradient-btn w-full text-white font-semibold py-3 px-4 rounded-lg inline-block text-center">
+                            Үй тапсырмасы
+                        </a>`;
+                } else {
+                    hwButtonHTML = `
+                        <div class="w-full bg-gray-300 text-gray-500 font-semibold py-3 px-4 rounded-lg text-center cursor-not-allowed">
+                           Үй тапсырмасы жоқ
+                        </div>`;
+                }
+
+                card.innerHTML = `
+                    <div class="relative">
+                        <iframe class="w-full" src="https://www.youtube.com/embed/${lesson.videoId}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">${lesson.title}</h3>
+                        ${hwButtonHTML}
+                        <div class="mt-4">
+                            <label class="flex items-center space-x-2 cursor-pointer text-gray-600">
+                                <input type="checkbox" data-lesson-id="${lesson.id}" class="h-5 w-5 rounded border-gray-300 text-green-600 focus:ring-green-500" ${isCompleted ? 'checked' : ''}>
+                                <span>Аяқталды деп белгілеу</span>
+                            </label>
+                        </div>
+                    </div>
+                `;
+                
+                lessonsContainer.appendChild(card);
+            });
+        }
+        
+        // Event Delegation for checkboxes
+        lessonsContainer.addEventListener('change', (e) => {
+            if (e.target.type === 'checkbox') {
+                const lessonId = parseInt(e.target.dataset.lessonId);
+                const card = document.getElementById(`lesson-${lessonId}`);
+
+                if (e.target.checked) {
+                    completedLessons.add(lessonId);
+                    card.classList.add('lesson-completed');
+                    card.classList.remove('border-gray-200');
+                } else {
+                    completedLessons.delete(lessonId);
+                    card.classList.remove('lesson-completed');
+                    card.classList.add('border-gray-200');
+                }
+                updateProgress();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderLessons();
+            updateProgress();
+        });
+
+    </script>
+</body>
+</html>
